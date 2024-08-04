@@ -1,0 +1,23 @@
+esphome:
+  name: ws2805_controller
+  platform: ESP32
+  board: esp32dev
+
+wifi:
+  ssid: "your_SSID"
+  password: "your_password"
+
+logger:
+
+api:
+
+ota:
+
+external_components:
+  - source: github://yourusername/your-repo-name
+    components: [ your_component_name ]
+
+sensor:
+  - platform: your_component_name
+    name: "Example Sensor"
+    some_option: value
