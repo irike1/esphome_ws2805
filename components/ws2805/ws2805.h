@@ -12,3 +12,4 @@ private:
   void send_bit(bool bit_val);
   void send_byte(uint8_t byte);
 };
+
