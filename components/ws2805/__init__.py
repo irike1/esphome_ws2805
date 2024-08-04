@@ -12,7 +12,6 @@ WS2805 = ws2805_ns.class_('WS2805', light.LightOutput, cg.Component)
 
 CONFIG_SCHEMA = light.LIGHT_SCHEMA.extend({
     cv.GenerateID(): cv.declare_id(WS2805),
-    cv.Required(CONF_OUTPUT_ID): cv.use_id(WS2805),
 }).extend(cv.COMPONENT_SCHEMA)
 
 def to_code(config):
