@@ -43,4 +43,14 @@ void WS2805::send_bit(bool bit_val) {
     delayMicroseconds(580);  // T1L: 580ns to 1us
   } else {
     digitalWrite(5, HIGH);
-    delayMicroseconds(2
+    delayMicroseconds(220);  // T0H: 220ns to 380ns
+    digitalWrite(5, LOW);
+    delayMicroseconds(580);  // T0L: 580ns to 1us
+  }
+}
+
+void WS2805::send_byte(uint8_t byte) {
+  for (int i = 7; i >= 0; i--) {
+    send_bit(byte & (1 << i));
+  }
+}
