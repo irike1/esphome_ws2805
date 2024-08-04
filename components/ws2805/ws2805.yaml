@@ -1,5 +1,5 @@
 esphome:
-  name: ws2805_controller
+  name: example_device
   platform: ESP32
   board: esp32dev
 
@@ -14,10 +14,14 @@ api:
 ota:
 
 external_components:
-  - source: github://yourusername/your-repo-name
-    components: [ your_component_name ]
+  - source: github.com/irike1/esphome_ws2805
+    components: [ ws2805 ]
 
-sensor:
-  - platform: your_component_name
-    name: "Example Sensor"
-    some_option: value
+light:
+  - platform: custom
+    lambda: |-
+      auto my_light = new WS2805();
+      App.register_component(my_light);
+      return {my_light};
+    lights:
+      - name: "WS2805 Light"
