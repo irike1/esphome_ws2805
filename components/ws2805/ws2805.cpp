@@ -1,5 +1,9 @@
 #include "ws2805.h"
 
+#include "esphome.h"
+#include "esphome/components/light/light_output.h"
+
+
 void WS2805::setup() {
   // Initialize GPIO pin, assume using GPIO5 for data
   pinMode(5, OUTPUT);
