@@ -1,16 +1,15 @@
 #include "ws2805.h"
 
-#include "esphome.h"
-#include "esphome/components/light/light_output.h"
-
+namespace esphome {
+namespace ws2805 {
 
 void WS2805::setup() {
-  // Initialize GPIO pin, assume using GPIO5 for data
-  pinMode(5, OUTPUT);
-  digitalWrite(5, LOW);
+  // Initialize the specified GPIO pin for data
+  pinMode(pin_, OUTPUT);
+  digitalWrite(pin_, LOW);
 }
 
-void WS2805::write_state(LightState *state) {
+void WS2805::write_state(light::LightState *state) {
   // Get the current color from the light state
   float red, green, blue, white1, white2;
   state->current_values_as_rgbw(&red, &green, &blue, &white1, &white2);
@@ -35,20 +34,20 @@ void WS2805::send_color(uint8_t r, uint8_t g, uint8_t b, uint8_t w1, uint8_t w2)
   send_byte(w2);
 
   // Send the reset signal (low for 280us)
-  digitalWrite(5, LOW);
+  digitalWrite(pin_, LOW);
   delayMicroseconds(280);
 }
 
 void WS2805::send_bit(bool bit_val) {
   if (bit_val) {
-    digitalWrite(5, HIGH);
+    digitalWrite(pin_, HIGH);
     delayMicroseconds(580);  // T1H: 580ns to 1us
-    digitalWrite(5, LOW);
+    digitalWrite(pin_, LOW);
     delayMicroseconds(580);  // T1L: 580ns to 1us
   } else {
-    digitalWrite(5, HIGH);
+    digitalWrite(pin_, HIGH);
     delayMicroseconds(220);  // T0H: 220ns to 380ns
-    digitalWrite(5, LOW);
+    digitalWrite(pin_, LOW);
     delayMicroseconds(580);  // T0L: 580ns to 1us
   }
 }
@@ -58,3 +57,6 @@ void WS2805::send_byte(uint8_t byte) {
     send_bit(byte & (1 << i));
   }
 }
+
+}  // namespace ws2805
+}  // namespace esphome
